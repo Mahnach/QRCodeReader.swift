@@ -1,4 +1,4 @@
- <p align="center">
+<p align="center">
   <img src="https://cloud.githubusercontent.com/assets/798235/19688388/c61a6ab8-9ac9-11e6-9757-e087c268f3a6.png" alt="QRCodeReader.swift">
 </p>
 
@@ -22,8 +22,8 @@ It provides a default view controller to display the camera view with the scan a
 ## Requirements
 
 - iOS 8.0+
-- Xcode 10.0+
-- Swift 5.0+
+- Xcode 9.0+
+- Swift 4.0+
 
 ## Usage
 
@@ -46,13 +46,6 @@ Then just follow these steps:
 lazy var readerVC: QRCodeReaderViewController = {
     let builder = QRCodeReaderViewControllerBuilder {
         $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
-        
-        // Configure the view controller (optional)
-        $0.showTorchButton        = false
-        $0.showSwitchCameraButton = false
-        $0.showCancelButton       = false
-        $0.showOverlayView        = true
-        $0.rectOfInterest         = CGRect(x: 0.2, y: 0.2, width: 0.6, height: 0.6)
     }
     
     return QRCodeReaderViewController(builder: builder)
@@ -70,7 +63,6 @@ lazy var readerVC: QRCodeReaderViewController = {
 
   // Presents the readerVC as modal form sheet
   readerVC.modalPresentationStyle = .formSheet
- 
   present(readerVC, animated: true, completion: nil)
 }
 
@@ -86,7 +78,7 @@ func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeRe
 //By pressing on the switch camera button
 func reader(_ reader: QRCodeReaderViewController, didSwitchCamera newCaptureDevice: AVCaptureDeviceInput) {
     if let cameraName = newCaptureDevice.device.localizedName {
-      print("Switching capture to: \(cameraName)")
+      print("Switching capturing to: \(cameraName)")
     }
 }
 
@@ -111,7 +103,7 @@ class YourCustomView: UIView, QRCodeReaderDisplayable {
   let toggleTorchButton: UIButton?  = ToggleTorchButton()
   var overlayView: UIView?          = UIView()
 
-  func setupComponents(with builder: QRCodeReaderViewControllerBuilder) {
+  func setupComponents(showCancelButton: Bool, showSwitchCameraButton: Bool, showTorchButton: Bool, showOverlayView: Bool) {
     // addSubviews
     // setup constraints
     // etc.
@@ -137,13 +129,13 @@ The recommended approach to use _QRCodeReaderViewController_ in your project is 
 
 Install CocoaPods if not already available:
 
-```bash
+``` bash
 $ [sudo] gem install cocoapods
 $ pod setup
 ```
 Go to the directory of your Xcode project, and Create and Edit your Podfile and add _QRCodeReader.swift_ to your corresponding `TargetName`:
 
-```bash
+``` bash
 $ cd /path/to/MyProject
 $ touch Podfile
 $ edit Podfile
@@ -152,19 +144,19 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'TargetName' do
-    pod 'QRCodeReader.swift', '~> 10.1.0'
+    pod 'QRCodeReader.swift', '~> 9.0.0'
 end
 ```
 
 Install into your project:
 
-```bash
+``` bash
 $ pod install
 ```
 
 Open your project in Xcode from the .xcworkspace file (not the usual project file):
 
-```bash
+``` bash
 $ open MyProject.xcworkspace
 ```
 
@@ -184,7 +176,7 @@ $ brew install carthage
 To integrate `QRCodeReader` into your Xcode project using Carthage, specify it in your `Cartfile` file:
 
 ```ogdl
-github "yannickl/QRCodeReader.swift" >= 10.1.0
+github "yannickl/QRCodeReader.swift" >= 9.0.0
 ```
 
 #### Swift Package Manager
@@ -198,7 +190,7 @@ let package = Package(
     name: "YOUR_PROJECT_NAME",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/yannickl/QRCodeReader.swift.git", versions: "10.1.0" ..< Version.max)
+        .Package(url: "https://github.com/yannickl/QRCodeReader.swift.git", versions: "9.0.0" ..< Version.max)
     ]
 )
 ```
